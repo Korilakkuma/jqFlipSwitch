@@ -234,11 +234,11 @@
         }
 
         // Trigger Event
-        self.trigger('change', settings, state);
+        self.trigger('change', [settings, state]);
     };
 
     /**
-     * This method is event listener that is invoked when value is changed.
+     * This method is event listener that is invoked after value is changed.
      * @param {object} event This argument is the wrapped event object by jQuery.
      * @param {object} settings This argument is object for plugin setting.
      * @param {FLIPPER_STATES} state This argument is either 'left' or 'right'.
@@ -248,7 +248,7 @@
     };
 
     /**
-     * This method adds event listener that is triggered when value changed.
+     * This method adds event listener that is triggered after value changed.
      * @param {HTMLElement} element This argument is the 2nd argument in $.fn.each method.
      */
     var _addEventOnChange = function(element) {
@@ -344,7 +344,7 @@
         } else if ($.isPlainObject(method) || (method === undefined)) {
             return methods['create'](method);
         } else {
-            $.error('jquery.jqflipswitch.js : The designated method is not defined.');
+            $.error('jquery.jqflipswitch.js : The designated method ("' + method + '") is not defined.');
         }
     };
 
