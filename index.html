@@ -1,15 +1,276 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<title>jqFlipswitch | jQuery Plugin</title>
+<title>jqFlipSwitch | jQuery Plugin</title>
 <meta charset="UTF-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro" type="text/css" media="all" />
+<style type="text/css">
+
+    * {
+        margin:0px;
+        padding:0px;
+    }
+
+    html, body {
+        font-size:12px;
+    }
+
+    body {
+        font-family:'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+        line-height:1.5;
+        color:#999;
+    }
+
+    #page {
+    }
+
+    header {
+        margin-bottom:2rem;
+        padding:2rem;
+        background-color:#006600;
+    }
+
+    h1, h2 {
+        font-family:'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+        font-weight:lighter;
+    }
+
+    header h1 {
+        font-size:4rem;
+        color:#FFF;
+    }
+
+    header h2 {
+        margin:1rem 0rem 0rem 1rem;
+        font-size:1.5rem;
+        color:#EEE;
+    }
+
+    section {
+        padding:1rem 2rem;
+    }
+
+    section h1 {
+        padding:0.5rem 0rem 0.5rem 1rem;
+        font-size:2rem;
+        color:#FFF;
+        background-color:#006600;
+    }
+
+    section h2 {
+        margin-bottom:1rem;
+        color:#666;
+    }
+
+    article {
+        margin:1rem 0rem;
+    }
+
+    p {
+        font-size:1.25rem;
+    }
+
+    table {
+        border-collapse:collapse;
+        border-spacing:0px;
+
+        margin:0rem auto 2rem auto;
+        width:90%;
+    }
+
+    table, th, td {
+        border:1px solid #00cc00;
+    }
+
+    caption {
+        margin:1rem 0rem;
+        font-family:'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+        font-size:1.5rem;
+        font-weight:normal;
+        color:#666;
+    }
+
+    th {
+        padding:0.5rem 0rem 0.5rem 1rem;
+        font-size:1.5rem;
+        font-weight:normal;
+        color:#FFF;
+        background-color:#006600;
+    }
+
+    td {
+        padding:1rem 0rem 1rem 1rem;
+        font-size:1rem;
+    }
+
+    .syntaxhighlighter {
+        -webkit-box-sizing:border-box;
+           -moz-box-sizing:border-box;
+                box-sizing:border-box;
+
+        padding:2rem;
+    }
+
+    .syntaxhighlighter div.line[class*="alt"] {
+        background-color:#fefefe !important;
+    }
+
+    #flipswitch-destroy-1 + div {
+        text-align:center;
+    }
+
+    button {
+        cursor:pointer;
+        outline:none;
+        border:none;
+        padding:2rem;
+        font-size:1.25rem;
+        color:#FFF;
+        background-color:#006600;
+
+        -webkit-transition:background-color 1s ease 0s;
+           -moz-transition:background-color 1s ease 0s;
+             -o-transition:background-color 1s ease 0s;
+                transition:background-color 1s ease 0s;
+    }
+
+    button:hover {
+        background-color:#00cc00;
+    }
+
+    button:active {
+        -webkit-box-shadow:0px 2px 1px 2px rgba(0, 0, 0, 0.2) inset;
+           -moz-box-shadow:0px 2px 1px 2px rgba(0, 0, 0, 0.2) inset;
+                box-shadow:0px 2px 1px 2px rgba(0, 0, 0, 0.2) inset;
+    }
+
+    b {
+        font-weight:normal;
+        color:#cc0000;
+    }
+
+    a:link, a:visited {
+        color:#0088cc;
+        text-decoration:none;
+    }
+
+    a:hover {
+        text-decoration:underline;
+    }
+
+    a:focus, a:active {
+        color:#dd2c0d;
+    }
+
+    footer {
+        padding:4rem 0rem;
+        font-size:1rem;
+        color:#EEE;
+        text-align:center;
+        background-color:#006600;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+        html, body {
+            font-size:14px;
+        }
+    }
+
+    @media only screen and (min-width: 1024px) {
+        html, body {
+            font-size:16px;
+        }
+    }
+
+</style>
 <link rel="stylesheet" href="src/css/jqflipswitch.default.style.css" type="text/css" media="all" />
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<link rel="stylesheet" href="lib/syntaxhighlighter/styles/shCore.css" type="text/css" media="all" />
+<link rel="stylesheet" href="lib/syntaxhighlighter/styles/shThemeDefault.css" type="text/css" media="all" />
+<link rel="stylesheet" href="lib/syntaxhighlighter/styles/shCoreEclipse.css" type="text/css" media="all" />
+<link rel="stylesheet" href="lib/syntaxhighlighter/styles/shThemeEclipse.css" type="text/css" media="all" />
+<script type="text/javascript" src="lib/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="src/js/jquery.jqflipswitch.min.js"></script>
 <script type="text/javascript">
 <!--
 $(function() {
+    SyntaxHighlighter.all();
+
+    // Smooth Scroll
+    $('a').on('click', function() {
+        var href = $(this).attr('href');
+
+        if (href.charAt(0) !== '#') {
+            return;
+        }
+
+        $('html, body').animate({scrollTop : ($(href).offset().top + 'px')}, 'slow', 'swing');
+    });
+
     $('#flipswitch').flipswitch();
+
+    $('#flipswitch-animates-1').flipswitch({
+        animates : {
+            duration : 1000,  // msec
+            easing   : 'linear'
+        }
+    });
+
+    $('#flipswitch-animates-2').flipswitch({
+       animates : null
+    });
+
+    $('#flipswitch-cursors-1').flipswitch({
+        cursors : {
+            normal : 'ew-resize'
+        }
+    });
+
+    $('#flipswitch-height-1').flipswitch({
+        height : 200  // px
+    });
+
+    $('#flipswitch-init-1').flipswitch({
+        init : 'right'
+    });
+
+    $('#flipswitch-texts-1').flipswitch({
+        texts : {
+            left  : 'YES',
+            right : 'NO'
+        }
+    });
+
+    $('#flipswitch-texts-2').flipswitch({
+        texts : null
+    });
+
+    $('#flipswitch-values-1').flipswitch({
+        values : {
+            left  : 'OFF',
+            right : 'ON'
+        },
+        change : function(event, ui) {
+            window.alert(ui.value);
+        }
+    });
+
+    $('#flipswitch-width-1').flipswitch({
+        width : 100  // px
+    });
+
+    $('#flipswitch-destroy-1').flipswitch();
+    $('#flipswitch-destroy-1').next().children('button').on('click', function() {
+        $('#flipswitch-destroy-1').flipswitch('destroy');
+    });
+
+    $('#flipswitch-change-1').flipswitch({
+        change : function(event, ui) {
+            console.dir(event);     // This is event object that jQuery wraps
+            console.log(ui.value);  // true or false (by default)
+            console.log(ui.state);  // 'left' or 'right'
+        }
+    });
+
 });
 //-->
 </script>
@@ -17,8 +278,578 @@ $(function() {
 
 
 <body>
-    <section>
-        <div id="flipswitch"></div>
-    </section>
+    <div id="page">
+        <header>
+            <h1>jqFilpSwitch</h1>
+            <h2>jQuery Plugin for Flip-Switch</h2>
+            <div>
+                <a href="https://github.com/Korilakkuma/jqFlipSwitch" target="_blank">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png">
+                </a>
+            </div>
+        </header>
+
+        <section>
+            <h1>Usage</h1>
+            <article>
+                <p>This plugin requires jQuery (<b>greater than or equal to version 1.7</b>).</p>
+<pre class="brush: html;">
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://code.jquery.com/jquery-2.1.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.jqflipswitch.js&quot;&gt;&lt;/script&gt;
+</pre>
+                <p>
+                    The CSS file is optional.
+                </p>
+<pre class="brush: html;">
+&lt;link rel=&quot;stylesheet&quot; href=&quot;jqflipswitch.default.style.css&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;
+</pre>
+                <p>
+                    Of course, the style of flip-switch can be customized by creating the original CSS !!
+                </p>
+                <p>
+                    In the case of using by default settings,
+                </p>
+<pre class="brush: js;">
+$(function() {
+    $(&quot;#flipswitch&quot;).flipswitch();
+});
+</pre>
+                <div id="flipswitch"></div>
+            </article>
+        </section>
+        <section id="section-options">
+            <h1>Options</h1>
+            <article>
+                <table>
+                    <caption>jqFlipSwitch Options Overview</caption>
+                    <thead>
+                        <tr><th scope="col">Option</th><th scope="col">Type</th><th scope="col">Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><a href="#section-options-animates">animates</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is to set animation duration and easing.</td></tr>
+                        <tr><td><a href="#section-options-cursors">cursors</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is to change cursor type when flip-switch is clicked.</td></tr>
+                        <tr><td><a href="#section-options-height">height</a></td><td><b>Number</b></td><td>This option is height of flip-switch.</td></tr>
+                        <tr><td><a href="#section-options-init">init</a></td><td><b>String</b></td><td>This option is initial flipper position.</td></tr>
+                        <tr><td><a href="#section-options-texts">texts</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is 2 texts that are displayed on flip-switch.</td></tr>
+                        <tr><td><a href="#section-options-values">values</a></td><td><b>Object</b></td><td>This option is 2 values that are returned by flip-switch.</td></tr>
+                        <tr><td><a href="#section-options-width">width</a></td><td><b>Number</b></td><td>This option is width of flip-switch.</td></tr>
+                    </tbody>
+                </table>
+            </article>
+            <section id="section-options-animates">
+                <h2>animates</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>animates option</caption>
+                        <thead>
+                            <tr><th scope="col">Type</th><th scope="col">Default</th><th scope="col" colspan="2">Properties</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2"><b>Object</b> or <b>Null</b></td>
+                                <td rowspan="2">{duration : &quot; fast &quot;, easing : &quot; swing &quot;}</td>
+                                <td>duration</td><td><b>Number</b> or <b>&quot; fast &quot;</b> or <b>&quot; slow &quot;</b></td>
+                            </tr>
+                            <tr><td>easing</td><td><b>&quot; swing &quot;</b>, <b>&quot; linear &quot;</b> ...etc</td></tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // animates option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        animates : {
+            duration : &quot;fast&quot;,
+            easing   : &quot;swing&quot;
+        }
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing animation,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change animates option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        animates : {
+            duration : 1000,  // msec
+            easing   : &quot;linear&quot;
+        }
+    });
+});
+</pre>
+                    <div id="flipswitch-animates-1"></div>
+                    <p>
+                        In the case of no animation,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change animates option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        animates : null
+    });
+});
+</pre>
+                    <div id="flipswitch-animates-2"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var animates = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;animates&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;animates&quot;, {duration : 1000, easing : &quot;linear&quot;});
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-animates -->
+            <section id="section-options-cursors">
+                <h2>cursors</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>cursors option</caption>
+                        <thead>
+                            <tr><th scope="col">Type</th><th scope="col">Default</th><th scope="col" colspan="2">Properties</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>Object</b></td>
+                                <td>{normal : &quot; pointer &quot;}</td>
+                                <td>normal</td><td><b>String</b> (This is defined by CSS cursor property)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // cursors option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        cursors : {
+            normal : &quot;pointer&quot;
+        }
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing cursor,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change cursors option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        cursors : {
+            normal : &quot;ew-resize&quot;
+        }
+    });
+});
+</pre>
+                    <div id="flipswitch-cursors-1"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var cursors = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;cursors&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;cursors&quot;, {normal : &quot;ew-resize&quot;});
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-cursors -->
+            <section id="section-options-height">
+                <h2>height</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>height option</caption>
+                        <thead><tr><th scope="col">Type</th><th scope="col">Default</th></tr></thead>
+                        <tbody><tr><td><b>Number</b></td><td>50 (px)</td></tr></tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // height option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        height : 50  // px
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing height,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change height option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        height : 200  // px
+    });
+});
+</pre>
+                    <div id="flipswitch-height-1"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var height = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;height&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;height&quot;, 200);
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-height -->
+            <section id="section-options-init">
+                <h2>init</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>init option</caption>
+                        <thead><tr><th scope="col">Type</th><th scope="col">Default</th></tr></thead>
+                        <tbody><tr><td><b>String</b> (<b>&quot; left &quot;</b>, or <b>&quot; right &quot;</b>)</td><td>&quot; left &quot;</td></tr></tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // init option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        init : &quot;left&quot;
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing init,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change init option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        init : &quot;right&quot;
+    });
+});
+</pre>
+                    <div id="flipswitch-init-1"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var init = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;init&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;init&quot;, &quot;right&quot;);
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-init -->
+            <section id="section-options-texts">
+                <h2>texts</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>texts option</caption>
+                        <thead>
+                            <tr><th scope="col">Type</th><th scope="col">Default</th><th scope="col" colspan="2">Properties</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2"><b>Object</b> or <b>Null</b></td>
+                                <td rowspan="2">{left : &quot; ON &quot;, right : &quot; OFF &quot;}</td>
+                                <td>left</td><td><b>String</b></td>
+                            </tr>
+                            <tr><td>right</td><td><b>String</b></td></tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // texts option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        texts : {
+            left  : &quot;ON&quot;,
+            right : &quot;OFF&quot;
+        }
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing texts,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change texts option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        texts : {
+            left  : &quot;YES&quot;,
+            right : &quot;NO&quot;
+        }
+    });
+});
+</pre>
+                    <div id="flipswitch-texts-1"></div>
+                    <p>
+                        In the case of no texts,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change animates option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        texts : null
+    });
+});
+</pre>
+                    <div id="flipswitch-texts-2"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var texts = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;texts&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;texts&quot;, {left : &quot;YES&quot;, right : &quot;NO&quot;});
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-texts -->
+            <section id="section-options-values">
+                <h2>values</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>values option</caption>
+                        <thead>
+                            <tr><th scope="col">Type</th><th scope="col">Default</th><th scope="col" colspan="2">Properties</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2"><b>Object</b></td>
+                                <td rowspan="2">{left : false, right : true}</td>
+                                <td>left</td><td><b>All types</b></td>
+                            </tr>
+                            <tr><td>right</td><td><b>All types</b></td></tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // values option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        values : {
+            left  : false,
+            right : true
+        }
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing values,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change values option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        values : {
+            left  : &quot;OFF&quot;,
+            right : &quot;ON&quot;
+        }
+    });
+});
+</pre>
+                    <div id="flipswitch-values-1"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var values = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;values&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;values&quot;, {left : &quot;OFF&quot;, right : &quot;ON&quot;});
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-values -->
+            <section id="section-options-width">
+                <h2>width</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>width option</caption>
+                        <thead><tr><th scope="col">Type</th><th scope="col">Default</th></tr></thead>
+                        <tbody><tr><td><b>Number</b></td><td>200 (px)</td></tr></tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // width option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        width : 200  // px
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing width,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change width option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        width : 100  // px
+    });
+});
+</pre>
+                    <div id="flipswitch-width-1"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var width = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;width&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;width&quot;, 100);
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-width -->
+        </section>
+        <!-- //#section-options -->
+        <section id="section-methods">
+            <h1>Methods</h1>
+            <article>
+                <table>
+                    <caption>jqFlipSwitch Methods Overview</caption>
+                    <thead>
+                        <tr><th scope="col">Method</th><th scope="col">Returns</th><th scope="col">Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><a href="#section-methods-create">create</a></td><td><b>jQuery</b> or <b></b></td><td>This method is to initialize plugin.</td></tr>
+                        <tr><td><a href="#section-methods-option">option</a></td><td><b>jQuery</b> or <b>All types</b></td><td>This method is getter or setter for plugin settings.</td></tr>
+                        <tr><td><a href="#section-methods-destroy">destroy</a></td><td><b>jQuery</b></td><td>This method removes elements and classes that are created by plugin.</td></tr>
+                    </tbody>
+                </table>
+            </article>
+            <section id="section-methods-create">
+                <h2>create(options)</h2>
+                <article>
+<pre class="brush: js;">
+$(function() {
+    var options = {};
+
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;create&quot;, options);
+});
+</pre>
+                    <p>
+                        This method is equal to the following,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    var options = {};
+
+    $(&quot;#flipswitch&quot;).flipswitch(options);
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-methods-create -->
+            <section id="section-methods-option">
+                <h2>option(key, value)</h2>
+                <article>
+                    <p>
+                        Please refer to <a href="#section-options">Options</a> section.
+                    </p>
+                </article>
+            </section>
+            <!-- //#section-methods-option -->
+            <section id="section-methods-destroy">
+                <h2>create(options)</h2>
+                <article>
+<pre class="brush: js;">
+$(function() {
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;destroy&quot;);
+});
+</pre>
+                    <div id="flipswitch-destroy-1"></div>
+                    <div><button type="button">Destroy</button></div>
+                </article>
+            </section>
+            <!-- //#section-methods-destroy -->
+        </section>
+        <!-- //#section-methods -->
+        <section id="section-events">
+            <h1>Events</h1>
+            <article>
+                <table>
+                    <caption>jqFlipSwitch Events Overview</caption>
+                    <thead>
+                        <tr><th scope="col">Method</th><th scope="col">Triggered</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><a href="#section-events-change">change</a></td><td>Triggered after value is changed.</td></tr>
+                    </tbody>
+                </table>
+            </article>
+            <section id="section-events-change">
+                <h2>change(event, ui)</h2>
+                <article>
+<pre class="brush: js;">
+$(function() {
+    $(&quot;#flipswitch&quot;).flipswitch({
+        change : function(event, ui) {
+            console.dir(event);     // This is event object that jQuery wraps.
+            console.log(ui.value);  // true or false (by default)
+            console.log(ui.state);  // &quot;left&quot; or &quot;right&quot;
+        }
+    });
+});
+</pre>
+                    <div id="flipswitch-change-1"></div>
+                </article>
+            </section>
+            <!-- //#section-events-change -->
+        </section>
+        <!-- //#section-events -->
+        <footer>
+            <p>Copyright 2014&copy;Tomohiro IKEDA</p>
+        </footer>
+    </div>
+    <!-- //#page -->
+    <script type="text/javascript" src="lib/syntaxhighlighter/scripts/shCore.js"></script>
+    <script type="text/javascript" src="lib/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="lib/syntaxhighlighter/scripts/shBrushXml.js"></script>
 </body>
 </html>
