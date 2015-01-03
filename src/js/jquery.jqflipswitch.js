@@ -43,10 +43,11 @@
     FLIPPER_STATES.RIGHT = 'right';
 
     /**
-     * This method is to initialize plugin.
+     * This method is to initialize plugin and return HTMLElement that wraps the parts for flip-switch.
      * In concrete, this method creates elements and adds style or class.
      * @param {HTMLElement} element This argument is the 2nd argument in $.fn.each method.
      * @param {object} settings This argument is object for plugin setting.
+     * @return {HTMLElement} This value is HTMLElement that wraps the parts for flip-switch.
      */
     var _create = function(element, settings) {
         if (!$.isPlainObject(settings)) {
@@ -54,7 +55,19 @@
         }
 
         // Initialize
-        var self = $(element);
+        var self = null;
+
+        if ((element instanceof HTMLInputElement) && (element.getAttribute('type') === 'checkbox')) {
+            // <input type="checkbox" />
+            self = $('<div />');
+
+            $(element).hide()
+                      .before(self)
+                      .appendTo(self);
+        } else {
+            // Otherwise (<div> ...etc)
+            self = $(element);
+        }
 
         var texts = {
             left  : '',
@@ -130,24 +143,40 @@
         self.addClass(UI_CLASSES.FLIP_SWITCH + ' ' + initClass)
             .append(flipper)
             .append(textContainer);
+
+        return self[0];  // HTMLElement
     };
 
     /**
      * This method toggles class of element that has 'jq-flipswitch' class.
-     * @param {jQuery} flipeswitch This argument is jQuery of element that has 'jq-flipswitch' class.
+     * @param {jQuery} flipswitch This argument is jQuery of element that has 'jq-flipswitch' class.
      * @param {FLIPPER_STATES} state This argument is either 'left' or 'right'.
      */
-    var _changeClass = function(flipeswitch, state) {
+    var _changeClass = function(flipswitch, state) {
         switch (state) {
             case FLIPPER_STATES.LEFT :
-                flipeswitch.removeClass(UI_CLASSES.FLIPPER_RIGHT).addClass(UI_CLASSES.FLIPPER_LEFT);
+                flipswitch.removeClass(UI_CLASSES.FLIPPER_RIGHT).addClass(UI_CLASSES.FLIPPER_LEFT);
                 break;
             case FLIPPER_STATES.RIGHT :
-                flipeswitch.removeClass(UI_CLASSES.FLIPPER_LEFT).addClass(UI_CLASSES.FLIPPER_RIGHT);
+                flipswitch.removeClass(UI_CLASSES.FLIPPER_LEFT).addClass(UI_CLASSES.FLIPPER_RIGHT);
                 break;
             default :
                 break;
         }
+    };
+
+    /**
+     * This method toggles checked attribute.
+     * @param {jQuery} flipswitch This argument is jQuery of element that has 'jq-flipswitch' class.
+     */
+    var _changeChecked = function(flipswitch) {
+        var checkbox = flipswitch.children('[type="checkbox"]');
+
+        if (checkbox.length === 0) {
+            return;
+        }
+
+        checkbox[0].checked = !checkbox[0].checked;
     };
 
     /**
@@ -189,7 +218,7 @@
             return;
         }
 
-        var self    = $(event.currentTarget);  //jQuery of flip-switch
+        var self    = $(event.currentTarget);  // jQuery of flip-switch
         var flipper = self.children('.' + UI_CLASSES.FLIPPER);
 
         var duration = 0;
@@ -222,19 +251,24 @@
             state = FLIPPER_STATES.LEFT;
         }
 
+        var animateCallback = function() {
+            // Change class
+            _changeClass(self, state);
+
+            // Change checked for <input type="checkbox" />
+            _changeChecked(self);
+
+            // Trigger Event
+            self.trigger('change', [settings, state]);
+        };
+
         if (/slow|fast/i.test(String(duration)) || (duration > 0)) {
-            flipper.animate({left : left}, duration, easing, function() {
-                // Change class
-                _changeClass(self, state);
-            });
+            flipper.animate({left : left}, duration, easing, animateCallback);
         } else {
             // Not animate
             flipper.css('left', left);
-            _changeClass(self, state);
+            animateCallback();
         }
-
-        // Trigger Event
-        self.trigger('change', [settings, state]);
     };
 
     /**
@@ -249,16 +283,16 @@
 
     /**
      * This method adds event listener that is triggered after value changed.
-     * @param {HTMLElement} element This argument is the 2nd argument in $.fn.each method.
+     * @param {HTMLElement} element This argument is HTMLElement that wraps the parts for flip-switch.
      */
     var _addEventOnChange = function(element) {
-        $(element).off('change', _onchangeListener)  //Clear
+        $(element).off('change', _onchangeListener)  // Clear
                   .on('change',  _onchangeListener);
     };
 
     /**
      * This method adds event listener that is invoked when flip-switch is clicked.
-     * @param {HTMLElement} element This argument is the 2nd argument in $.fn.each method.
+     * @param {HTMLElement} element This argument is HTMLElement that wraps the parts for flip-switch.
      * @param {object} settings This argument is object for plugin setting.
      */
     var _addEventOnClick = function(element, settings) {
@@ -295,11 +329,12 @@
                 self.flipswitch.settings = $.extend(true, {}, self.flipswitch.defaults, options);
 
                 return self.each(function(index, element) {
-                    var settings = $(element).flipswitch.settings;
+                    var settings   = $(element).flipswitch.settings;
+                    var flipswitch = _create(element, settings);
 
-                    _create(element, settings);
-                    _addEventOnChange(element, settings);
-                    _addEventOnClick(element, settings);
+                    // Add Event Listener
+                    _addEventOnChange(flipswitch, settings);
+                    _addEventOnClick(flipswitch,  settings);
                 });
             },
             /**
@@ -328,19 +363,34 @@
              * @return {jQuery} This is returned for method chain.
              */
             destroy : function() {
+                // Remove classes and elements
                 var removedClasses = UI_CLASSES.FLIP_SWITCH  + ' '
                                    + UI_CLASSES.FLIPPER_LEFT + ' '
                                    + UI_CLASSES.FLIPPER_RIGHT;
 
+                var flipswitch = null;
+
+                if ((self[0] instanceof HTMLInputElement) && (self[0].getAttribute('type') === 'checkbox')) {
+                    // <input type="checkbox" />
+                    flipswitch = self.parent('div');
+
+                    self.show().insertBefore(flipswitch);
+                    flipswitch.remove();
+                } else {
+                    // Otherwise
+                    flipswitch = self;
+                    flipswitch.removeClass(removedClasses).empty();
+                }
+
+                // Clear
                 self.flipswitch.settings = {};
-                self.removeClass(removedClasses).empty();
 
                 return self;
             }
         };
 
         if (methods[String(method)]) {
-            return methods[String(method)].apply(self, Array.prototype.slice.call(arguments, 1));
+            return methods[String(method)](Array.prototype.slice.call(arguments, 1));
         } else if ($.isPlainObject(method) || (method === undefined)) {
             return methods['create'](method);
         } else {

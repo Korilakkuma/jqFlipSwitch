@@ -209,7 +209,7 @@
         background-color:#fefefe !important;
     }
 
-    #flipswitch-destroy-1 + div {
+    #flipswitch-destroy-1 + div + div {
         text-align:center;
     }
 
@@ -319,6 +319,12 @@ $(function() {
 
     $('#flipswitch').flipswitch();
 
+    $('#flipswitch-checkbox').flipswitch({
+        change : function (event, ui) {
+            console.log($(event.currentTarget).children('[type="checkbox"]')[0].checked);
+        }
+    });
+
     $('#flipswitch-animates-1').flipswitch({
         animates : {
             duration : 1000,  // msec
@@ -369,9 +375,10 @@ $(function() {
         width : 100  // px
     });
 
-    $('#flipswitch-destroy-1').flipswitch();
-    $('#flipswitch-destroy-1').next().children('button').on('click', function() {
+    $('#flipswitch-destroy-1, #flipswitch-destroy-2').flipswitch();
+    $('#flipswitch-destroy-1').next().next().children('button').on('click', function() {
         $('#flipswitch-destroy-1').flipswitch('destroy');
+        $('#flipswitch-destroy-2').flipswitch('destroy');
     });
 
     $('#flipswitch-change-1').flipswitch({
@@ -413,7 +420,7 @@ $(function() {
                 </dl>
             </article>
         </section>
-        <!-- //section-download -->
+        <!-- //#section-download -->
         <section id="section-usage">
             <h1>Usage</h1>
             <article>
@@ -434,15 +441,35 @@ $(function() {
                 <p>
                     In the case of using by default settings,
                 </p>
+<pre class="brush: html;">
+&lt;div id=&quot;flipswitch&quot;&gt;&lt;/div&gt;
+</pre>
 <pre class="brush: js;">
 $(function() {
     $(&quot;#flipswitch&quot;).flipswitch();
 });
 </pre>
                 <div id="flipswitch"></div>
+                <p>
+                    This plugin can also apply to checkbox.
+                </p>
+<pre class="brush: html;">
+&lt;input type=&quot;checkbox&quot; id=&quot;flipswitch-checkbox&quot; /&gt;
+</pre>
+<pre class="brush: js;">
+$(function() {
+    $(&quot;#flipswitch-checkbox&quot;).flipswitch({
+        // This callback is in order to display checked attribute.
+        change : function (event, ui) {
+            console.log($(event.currentTarget).children(&apos;[type=&quot;checkbox&quot;]&apos;)[0].checked);
+        }
+    });
+});
+</pre>
+                <div><input type="checkbox" id="flipswitch-checkbox" /></div>
             </article>
         </section>
-        <!-- //section-usage-->
+        <!-- //#section-usage-->
         <section id="section-options">
             <h1>Options</h1>
             <article>
@@ -930,6 +957,7 @@ $(function() {
 });
 </pre>
                     <div id="flipswitch-destroy-1"></div>
+                    <div><input type="checkbox" id="flipswitch-destroy-2" /></div>
                     <div><button type="button">Destroy</button></div>
                 </article>
             </section>
