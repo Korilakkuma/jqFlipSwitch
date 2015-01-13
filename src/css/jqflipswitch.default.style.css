@@ -30,14 +30,8 @@
     background-image:        linear-gradient(top, #FFF, #EEE);
 }
 
-.jq-flipswitch.jq-flipper-left .jq-flipper {
-    -webkit-border-radius:24px 0px 0px 24px;
-       -moz-border-radius:24px 0px 0px 24px;
-            border-radius:24px 0px 0px 24px;
-}
-
-.jq-flipswitch.jq-flipper-right .jq-flipper {
-    -webkit-border-radius:0px 24px 24px 0px;
-       -moz-border-radius:0px 24px 24px 0px;
-            border-radius:0px 24px 24px 0px;
+.jq-flipswitch .jq-flipper {
+    -webkit-border-radius:24px;
+       -moz-border-radius:24px;
+            border-radius:24px;
 }
