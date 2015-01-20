@@ -368,24 +368,24 @@
                                    + UI_CLASSES.FLIPPER_LEFT + ' '
                                    + UI_CLASSES.FLIPPER_RIGHT;
 
-                var flipswitch = null;
-
-                if ((self[0] instanceof HTMLInputElement) && (self[0].getAttribute('type') === 'checkbox')) {
-                    // <input type="checkbox" />
-                    flipswitch = self.parent('div');
-
-                    self.show().insertBefore(flipswitch);
-                    flipswitch.remove();
-                } else {
-                    // Otherwise
-                    flipswitch = self;
-                    flipswitch.removeClass(removedClasses).empty();
-                }
-
                 // Clear
                 self.flipswitch.settings = {};
 
-                return self;
+                return self.each(function(index, element) {
+                    var flipswitch = null;
+
+                    if ((element instanceof HTMLInputElement) && (element.getAttribute('type') === 'checkbox')) {
+                        // <input type="checkbox" />
+                        flipswitch = $(element).parent();
+
+                        $(element).show().insertBefore(flipswitch);
+                        flipswitch.remove();
+                    } else {
+                        // Otherwise
+                        flipswitch = $(element);
+                        flipswitch.removeClass(removedClasses).empty();
+                    }
+                });
             }
         };
 

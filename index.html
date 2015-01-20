@@ -376,9 +376,8 @@ $(function() {
     });
 
     $('#flipswitch-destroy-1, #flipswitch-destroy-2').flipswitch();
-    $('#flipswitch-destroy-1').next().next().children('button').on('click', function() {
-        $('#flipswitch-destroy-1').flipswitch('destroy');
-        $('#flipswitch-destroy-2').flipswitch('destroy');
+    $('#flipswitch-destroy-1').next().next().children('button').one('click', function(e) {
+        $('#flipswitch-destroy-1, #flipswitch-destroy-2').flipswitch('destroy');
     });
 
     $('#flipswitch-change-1').flipswitch({
