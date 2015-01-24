@@ -333,7 +333,7 @@
              */
             create : function(options) {
                 // Clear
-                this.destroy();
+                methods.destroy();
 
                 // Decorate
                 self.flipswitch.settings = $.extend(true, {}, self.flipswitch.defaults, options);
@@ -400,7 +400,7 @@
         };
 
         if (methods[String(method)]) {
-            return methods[String(method)](Array.prototype.slice.call(arguments, 1));
+            return methods[String(method)].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if ($.isPlainObject(method) || (method === undefined)) {
             return methods['create'](method);
         } else {
