@@ -23,7 +23,7 @@
     } else {
         MOUSE_EVENTS.START = 'mousedown';
         MOUSE_EVENTS.MOVE  = 'mousemove';
-        MOUSE_EVENTS.END   = 'mouseend';
+        MOUSE_EVENTS.END   = 'mouseup';
     }
 
     // These classes are added by plugin
@@ -64,9 +64,11 @@
             $(element).hide()
                       .before(self)
                       .appendTo(self);
-        } else {
+        } else if (!(element instanceof HTMLInputElement) && (element instanceof HTMLElement)) {
             // Otherwise (<div> ...etc)
             self = $(element);
+        } else {
+            return null;
         }
 
         var texts = {
@@ -153,6 +155,10 @@
      * @param {FLIPPER_STATES} state This argument is either 'left' or 'right'.
      */
     var _changeClass = function(flipswitch, state) {
+        if (!(flipswitch instanceof jQuery)) {
+            return;
+        };
+
         switch (state) {
             case FLIPPER_STATES.LEFT :
                 flipswitch.removeClass(UI_CLASSES.FLIPPER_RIGHT).addClass(UI_CLASSES.FLIPPER_LEFT);
@@ -170,6 +176,10 @@
      * @param {jQuery} flipswitch This argument is jQuery of element that has 'jq-flipswitch' class.
      */
     var _changeChecked = function(flipswitch) {
+        if (!( flipswitch instanceof jQuery)) {
+            return;
+        }
+
         var checkbox = flipswitch.children('[type="checkbox"]');
 
         if (checkbox.length === 0) {
