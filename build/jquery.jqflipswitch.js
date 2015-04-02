@@ -42,6 +42,8 @@
     FLIPPER_STATES.LEFT  = 'left';
     FLIPPER_STATES.RIGHT = 'right';
 
+    var EVENT_NAMESPACE = 'jq-flipswitch';
+
     /**
      * This method is to initialize plugin and return HTMLElement that wraps the parts for flip-switch.
      * In concrete, this method creates elements and adds style or class.
@@ -296,8 +298,7 @@
      * @param {HTMLElement} element This argument is HTMLElement that wraps the parts for flip-switch.
      */
     var _addEventOnChange = function(element) {
-        $(element).off('change', _onchangeListener)  // Clear
-                  .on('change',  _onchangeListener);
+        $(element).on(('change.' + EVENT_NAMESPACE), _onchangeListener);
     };
 
     /**
@@ -306,13 +307,9 @@
      * @param {object} settings This argument is object for plugin setting.
      */
     var _addEventOnClick = function(element, settings) {
-        // Wrap _onclickListener
-        var onclickListener = function(event) {
+        $(element).on((MOUSE_EVENTS.CLICK + '.' + EVENT_NAMESPACE), function(event) {
             _onclickListener(event, settings);
-        };
-
-        $(element).off(MOUSE_EVENTS.CLICK, onclickListener)  // Clear
-                  .on(MOUSE_EVENTS.CLICK,  onclickListener);
+        });
     };
 
     /**
@@ -341,6 +338,9 @@
                 return self.each(function(index, element) {
                     var settings   = $(element).flipswitch.settings;
                     var flipswitch = _create(element, settings);
+
+                    // Remove Event Listener
+                    $(flipswitch).off(EVENT_NAMESPACE);
 
                     // Add Event Listener
                     _addEventOnChange(flipswitch, settings);
