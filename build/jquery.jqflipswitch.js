@@ -42,6 +42,11 @@
     FLIPPER_STATES.LEFT  = 'left';
     FLIPPER_STATES.RIGHT = 'right';
 
+    var EVENT_TYPES = {};
+
+    EVENT_TYPES.CLICK = 'click';
+    EVENT_TYPES.FLIP  = 'flip';
+
     var EVENT_NAMESPACE = 'jq-flipswitch';
 
     /**
@@ -86,7 +91,16 @@
         var cursor = 'pointer';
 
         if ($.isPlainObject(settings.cursors)) {
-            cursor = settings.cursors.normal || 'pointer';
+            switch (settings.type) {
+                case EVENT_TYPES.CLICK :
+                    cursor = settings.cursors.normal || 'pointer';
+                    break;
+                case EVENT_TYPES.FLIP :
+                    cursor = settings.cursors.flip || 'pointer';
+                    break;
+                default :
+                    break;
+            }
         }
 
         // Create child elements
@@ -313,6 +327,122 @@
     };
 
     /**
+     * This method adds event listener that is invoked when flip-switch is flipped.
+     * @param {HTMLElement} element This argument is HTMLElement that wraps the parts for flip-switch.
+     * @param {object} settings This argument is object for plugin setting.
+     */
+    var _addEventOnFlip = function(element, settings) {
+        var self    = $(element);
+        var flipper = self.children('.' + UI_CLASSES.FLIPPER);
+
+        var getX = function(event, flipper) {
+            var flipswitch = flipper.parent();
+            var x          = event.pageX - flipswitch.offset().left;
+
+            var width     = parseInt(settings.width);
+            var halfWidth = parseInt(width / 2);
+
+            if (flipswitch.hasClass(UI_CLASSES.FLIPPER_LEFT)) {
+                if (x > halfWidth) {
+                    x = halfWidth;
+                }
+            } else {
+                if (x > width) {
+                    x = width;
+                }
+
+                x -= halfWidth;
+            }
+
+            if (x < 0) {
+                x = 0;
+            }
+
+            return x;
+        };
+
+        var getState = function(event, targetFlipper) {
+            var state     = '';
+            var threshold = settings.threshold;
+            var halfWidth = parseInt(settings.width) / 2;
+            var x         = getX(event, targetFlipper);
+
+            if (targetFlipper.parent().hasClass(UI_CLASSES.FLIPPER_LEFT)) {
+                // from Left
+                if (x >= threshold) {
+                    // to Right
+                    state = FLIPPER_STATES.RIGHT;
+                } else {
+                    // Revert
+                    state = FLIPPER_STATES.LEFT;
+                }
+            } else {
+                // from Right
+                if (x <= (halfWidth - threshold)) {
+                    // to Left
+                    state = FLIPPER_STATES.LEFT;
+                } else {
+                    // Revert
+                    state = FLIPPER_STATES.RIGHT;
+                }
+            }
+
+            return state;
+        };
+
+        var onstartListener = function(event) {
+            flipper.data('isDown', true);
+            $(window).data('target', flipper);
+        };
+
+        var onmoveListener = function(event) {
+            if (!flipper.data('isDown')) {
+                return;
+            }
+
+            var cursor = 'ew-resize';
+
+            if ($.isPlainObject(settings.cursors)) {
+                cursor = settings.cursors.flip || 'ew-resize';
+            }
+
+            flipper.css('cursor', cursor)
+                   .css('left', (getX(event, flipper) + 'px'));
+        };
+
+        var onupListener = function(event) {
+            var targetFlipper = $(window).data('target') || null;
+
+            if ((targetFlipper === null) || !targetFlipper.data('isDown')) {
+                return;
+            }
+
+            var left = parseInt(parseInt(settings.width) / 2) + 'px';
+
+            switch (getState(event, targetFlipper)) {
+                case FLIPPER_STATES.LEFT :
+                    targetFlipper.parent().removeClass(UI_CLASSES.FLIPPER_RIGHT).addClass(UI_CLASSES.FLIPPER_LEFT);
+                    targetFlipper.css('left', '0px');
+                    break;
+                case FLIPPER_STATES.RIGHT :
+                    targetFlipper.parent().removeClass(UI_CLASSES.FLIPPER_LEFT).addClass(UI_CLASSES.FLIPPER_RIGHT);
+                    targetFlipper.css('left', left);
+                    break;
+                default :
+                    break;
+            }
+
+            targetFlipper.removeData('isDown');
+            $(window).removeData('target');
+        };
+
+        flipper.on((MOUSE_EVENTS.START + '.' + EVENT_NAMESPACE), onstartListener)
+               .on((MOUSE_EVENTS.MOVE  + '.' + EVENT_NAMESPACE), onmoveListener);
+
+        $(window).on((MOUSE_EVENTS.END + '.' + EVENT_NAMESPACE), onupListener);
+    };
+
+    /**
      * This method is public as plugin.
      * @param {object|string} method If this argument is object, the default settings are changed.
      *     If this argument is string, the designate method is invoked.
@@ -340,11 +470,21 @@
                     var flipswitch = _create(element, settings);
 
                     // Remove Event Listener
-                    $(flipswitch).off(EVENT_NAMESPACE);
+                    $(flipswitch).off('.' + EVENT_NAMESPACE);
 
                     // Add Event Listener
                     _addEventOnChange(flipswitch, settings);
-                    _addEventOnClick(flipswitch,  settings);
+
+                    switch (settings.type) {
+                        case EVENT_TYPES.CLICK :
+                            _addEventOnClick(flipswitch, settings);
+                            break;
+                        case EVENT_TYPES.FLIP :
+                            _addEventOnFlip(flipswitch, settings);
+                            break;
+                        default :
+                            break;
+                    }
                 });
             },
             /**
@@ -410,11 +550,14 @@
 
     // Settings by default
     $.fn.flipswitch.defaults = {
+        type      : 'click',  // or 'flip'
         width     : 200,  // px
         height    : 50,   // px
         init      : FLIPPER_STATES.LEFT,
+        threshold : 50,  // px
         cursors   : {
-            normal : 'pointer'
+            normal : 'pointer',
+            flip   : 'ew-resize'
         },
         values    : {
             left  : false,
