@@ -361,6 +361,10 @@ $(function() {
         texts : null
     });
 
+    $('#flipswitch-flip-1').flipswitch({
+        type : 'flip'
+    });
+
     $('#flipswitch-values-1').flipswitch({
         values : {
             left  : 'OFF',
@@ -483,6 +487,7 @@ $(function() {
                         <tr><td><a href="#section-options-height">height</a></td><td><b>Number</b></td><td>This option is height of flip-switch.</td></tr>
                         <tr><td><a href="#section-options-init">init</a></td><td><b>String</b></td><td>This option is initial flipper position.</td></tr>
                         <tr><td><a href="#section-options-texts">texts</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is 2 texts that are displayed on flip-switch.</td></tr>
+                        <tr><td><a href="#section-options-type">type</a></td><td><b>String</b></td><td>This option is event type.</td></tr>
                         <tr><td><a href="#section-options-values">values</a></td><td><b>Object</b></td><td>This option is 2 values that are returned by flip-switch.</td></tr>
                         <tr><td><a href="#section-options-width">width</a></td><td><b>Number</b></td><td>This option is width of flip-switch.</td></tr>
                     </tbody>
@@ -789,6 +794,53 @@ $(function() {
                 </article>
             </section>
             <!-- //#section-options-texts -->
+            <section id="section-options-type">
+                <h2>type</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>type option</caption>
+                        <thead><tr><th scope="col">Type</th><th scope="col">Default</th></tr></thead>
+                        <tbody><tr><td><b>String</b> (<b>&quot; click &quot;</b>, or <b>&quot; flip &quot;</b>)</td><td>&quot; click &quot;</td></tr></tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // type option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        type : &quot;click&quot;
+    });
+});
+</pre>
+                    <p>
+                        In the case of &quot;flip&quot;,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change type option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        type : &quot;flip&quot;
+    });
+});
+</pre>
+                    <div id="flipswitch-flip-1"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var type = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;type&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;type&quot;, &quot;flip&quot;);
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-type -->
             <section id="section-options-values">
                 <h2>values</h2>
                 <hr />
