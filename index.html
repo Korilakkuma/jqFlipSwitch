@@ -371,6 +371,11 @@ $(function() {
         texts : null
     });
 
+    $('#flipswitch-threshold-1').flipswitch({
+        type      : 'flip',
+        threshold : 25
+    });
+
     $('#flipswitch-flip-1').flipswitch({
         type : 'flip'
     });
@@ -497,6 +502,7 @@ $(function() {
                         <tr><td><a href="#section-options-height">height</a></td><td><b>Number</b></td><td>This option is height of flip-switch.</td></tr>
                         <tr><td><a href="#section-options-init">init</a></td><td><b>String</b></td><td>This option is initial flipper position.</td></tr>
                         <tr><td><a href="#section-options-texts">texts</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is 2 texts that are displayed on flip-switch.</td></tr>
+                        <tr><td><a href="#section-options-threshold">threshold</a><td><b>Number</b></td><td>This option is threshold for flip.</td></tr>
                         <tr><td><a href="#section-options-type">type</a></td><td><b>String</b></td><td>This option is event type.</td></tr>
                         <tr><td><a href="#section-options-values">values</a></td><td><b>Object</b></td><td>This option is 2 values that are returned by flip-switch.</td></tr>
                         <tr><td><a href="#section-options-width">width</a></td><td><b>Number</b></td><td>This option is width of flip-switch.</td></tr>
@@ -808,6 +814,55 @@ $(function() {
                 </article>
             </section>
             <!-- //#section-options-texts -->
+            <section id="section-options-threshold">
+                <h2>threshold</h2>
+                <hr />
+                <article>
+                    <table>
+                        <caption>threshold option</caption>
+                        <thead><tr><th scope="col">Type</th><th scope="col">Default</th></tr></thead>
+                        <tbody><tr><td><b>Number</b></td><td>50</td></tr></tbody>
+                    </table>
+                    <p>
+                        In the case of default,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // threshold option by default
+    $(&quot;#flipswitch&quot;).flipswitch({
+        type      : &quot;flip&quot;,
+        threshold : 50
+    });
+});
+</pre>
+                    <p>
+                        In the case of changing threshold,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Change threshold option
+    $(&quot;#flipswitch&quot;).flipswitch({
+        type      : &quot;flip&quot;,
+        threshold : 25
+    });
+});
+</pre>
+                    <div id="flipswitch-threshold-1"></div>
+                    <p>
+                        Getter and Setter,
+                    </p>
+<pre class="brush: js;">
+$(function() {
+    // Getter
+    var threshold = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;threshold&quot;);
+
+    // Setter
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;threshold&quot;, 25);
+});
+</pre>
+                </article>
+            </section>
+            <!-- //#section-options-threshold -->
             <section id="section-options-type">
                 <h2>type</h2>
                 <hr />
