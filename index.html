@@ -337,8 +337,18 @@ $(function() {
     });
 
     $('#flipswitch-cursors-1').flipswitch({
+        type    : 'click',
         cursors : {
-            normal : 'ew-resize'
+            normal : 'default',
+            flip   : 'move'
+        }
+    });
+
+    $('#flipswitch-cursors-2').flipswitch({
+        type    : 'flip',
+        cursors : {
+            normal : 'default',
+            flip   : 'move'
         }
     });
 
@@ -483,7 +493,7 @@ $(function() {
                     </thead>
                     <tbody>
                         <tr><td><a href="#section-options-animates">animates</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is to set animation duration and easing.</td></tr>
-                        <tr><td><a href="#section-options-cursors">cursors</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is to change cursor type when flip-switch is clicked.</td></tr>
+                        <tr><td><a href="#section-options-cursors">cursors</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is to change cursor type when flip-switch is clicked or flipped.</td></tr>
                         <tr><td><a href="#section-options-height">height</a></td><td><b>Number</b></td><td>This option is height of flip-switch.</td></tr>
                         <tr><td><a href="#section-options-init">init</a></td><td><b>String</b></td><td>This option is initial flipper position.</td></tr>
                         <tr><td><a href="#section-options-texts">texts</a></td><td><b>Object</b> or <b>Null</b></td><td>This option is 2 texts that are displayed on flip-switch.</td></tr>
@@ -578,10 +588,11 @@ $(function() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><b>Object</b></td>
-                                <td>{normal : &quot; pointer &quot;}</td>
+                                <td rowspan="2"><b>Object</b></td>
+                                <td rowspan="2">{normal : &quot; pointer &quot;, flip : &quot; ew-resize &quot;}</td>
                                 <td>normal</td><td><b>String</b> (This is defined by CSS cursor property)</td>
                             </tr>
+                            <tr><td>flip</td><td><b>String</b> (This is defined by CSS cursor property)</td></tr>
                         </tbody>
                     </table>
                     <p>
@@ -592,7 +603,8 @@ $(function() {
     // cursors option by default
     $(&quot;#flipswitch&quot;).flipswitch({
         cursors : {
-            normal : &quot;pointer&quot;
+            normal : &quot;pointer&quot;,
+            flip   : &quot;ew-resize&quot;
         }
     });
 });
@@ -605,12 +617,14 @@ $(function() {
     // Change cursors option
     $(&quot;#flipswitch&quot;).flipswitch({
         cursors : {
-            normal : &quot;ew-resize&quot;
+            normal : &quot;default&quot;,
+            flip   : &quot;move&quot;
         }
     });
 });
 </pre>
                     <div id="flipswitch-cursors-1"></div>
+                    <div id="flipswitch-cursors-2"></div>
                     <p>
                         Getter and Setter,
                     </p>
@@ -620,7 +634,7 @@ $(function() {
     var cursors = $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;cursors&quot;);
 
     // Setter
-    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;cursors&quot;, {normal : &quot;ew-resize&quot;});
+    $(&quot;#flipswitch&quot;).flipswitch(&quot;option&quot;, &quot;cursors&quot;, {normal : &quot;default&quot;, flip : &quot;move&quot;});
 });
 </pre>
                 </article>
