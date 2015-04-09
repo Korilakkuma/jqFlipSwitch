@@ -361,8 +361,9 @@
             return x;
         };
 
-        var getState = function(event, targetFlipper) {
+        var getStates = function(event, targetFlipper) {
             var state     = '';
+            var changed   = false;
             var threshold = settings.threshold;
             var halfWidth = parseInt(settings.width) / 2;
             var x         = getX(event, targetFlipper);
@@ -371,7 +372,8 @@
                 // from Left
                 if (x >= threshold) {
                     // to Right
-                    state = FLIPPER_STATES.RIGHT;
+                    state   = FLIPPER_STATES.RIGHT;
+                    changed = true;
                 } else {
                     // Revert
                     state = FLIPPER_STATES.LEFT;
@@ -380,14 +382,15 @@
                 // from Right
                 if (x <= (halfWidth - threshold)) {
                     // to Left
-                    state = FLIPPER_STATES.LEFT;
+                    state   = FLIPPER_STATES.LEFT;
+                    changed = true;
                 } else {
                     // Revert
                     state = FLIPPER_STATES.RIGHT;
                 }
             }
 
-            return state;
+            return {state : state, changed : changed};
         };
 
         var onstartListener = function(event) {
@@ -417,19 +420,25 @@
                 return;
             }
 
-            var left = parseInt(parseInt(settings.width) / 2) + 'px';
+            var flipswitch = targetFlipper.parent();
+            var states     = getStates(event, targetFlipper);
+            var left       = parseInt(parseInt(settings.width) / 2) + 'px';
 
-            switch (getState(event, targetFlipper)) {
+            switch (states.state) {
                 case FLIPPER_STATES.LEFT :
-                    targetFlipper.parent().removeClass(UI_CLASSES.FLIPPER_RIGHT).addClass(UI_CLASSES.FLIPPER_LEFT);
+                    flipswitch.removeClass(UI_CLASSES.FLIPPER_RIGHT).addClass(UI_CLASSES.FLIPPER_LEFT);
                     targetFlipper.css('left', '0px');
                     break;
                 case FLIPPER_STATES.RIGHT :
-                    targetFlipper.parent().removeClass(UI_CLASSES.FLIPPER_LEFT).addClass(UI_CLASSES.FLIPPER_RIGHT);
+                    flipswitch.removeClass(UI_CLASSES.FLIPPER_LEFT).addClass(UI_CLASSES.FLIPPER_RIGHT);
                     targetFlipper.css('left', left);
                     break;
                 default :
                     break;
+            }
+
+            if (states.changed) {
+                flipswitch.trigger('change', [settings, states.state]);
             }
 
             targetFlipper.removeData('isDown');
