@@ -308,6 +308,15 @@
     };
 
     /**
+     * This method is event listener that is invoked during flip.
+     * @param {object} event This argument is the wrapped event object by jQuery.
+     * @param {object} settings This argument is object for plugin setting.
+     */
+    var _onflipListener = function(event, settings) {
+        _invokeCallback(event, settings);
+    };
+
+    /**
      * This method adds event listener that is triggered after value changed.
      * @param {HTMLElement} element This argument is HTMLElement that wraps the parts for flip-switch.
      */
@@ -411,6 +420,9 @@
 
             flipper.css('cursor', cursor)
                    .css('left', (getX(event, flipper) + 'px'));
+
+            // Trigger Event
+            self.trigger('flip', [settings]);
         };
 
         var onupListener = function(event) {
@@ -444,6 +456,8 @@
             targetFlipper.removeData('isDown');
             $(window).removeData('target');
         };
+
+        self.on(('flip.' + EVENT_NAMESPACE), _onflipListener);
 
         flipper.on((MOUSE_EVENTS.START + '.' + EVENT_NAMESPACE), onstartListener)
                .on((MOUSE_EVENTS.MOVE  + '.' + EVENT_NAMESPACE), onmoveListener);
@@ -581,6 +595,8 @@
             easing   : 'swing'
         },
         change    : function(event, ui) {
+        },
+        flip      : function(event, ui) {
         }
     };
 
