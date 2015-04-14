@@ -308,6 +308,16 @@
     };
 
     /**
+     * This method is event listener that is invoked on the start of flip.
+     * @param {object} event This argument is the wrapped event object by jQuery.
+     * @param {object} settings This argument is object for plugin setting.
+     * @param {FLIPPER_STATES} state This argument is either 'left' or 'right'.
+     */
+    var _onflipstartListener = function(event, settings, state) {
+        _invokeCallback(event, settings, state);
+    };
+
+    /**
      * This method is event listener that is invoked during flip.
      * @param {object} event This argument is the wrapped event object by jQuery.
      * @param {object} settings This argument is object for plugin setting.
@@ -403,6 +413,17 @@
         };
 
         var onstartListener = function(event) {
+            // Trigger Event
+            var state = '';
+
+            if (self.hasClass(UI_CLASSES.FLIPPER_LEFT)) {
+                state = FLIPPER_STATES.LEFT;
+            } else {
+                state = FLIPPER_STATES.RIGHT;
+            }
+
+            self.trigger('flipstart', [settings, state]);
+
             flipper.data('isDown', true);
             $(window).data('target', flipper);
         };
@@ -457,7 +478,8 @@
             $(window).removeData('target');
         };
 
-        self.on(('flip.' + EVENT_NAMESPACE), _onflipListener);
+        self.on(('flipstart.' + EVENT_NAMESPACE), _onflipstartListener);
+        self.on(('flip.'      + EVENT_NAMESPACE), _onflipListener);
 
         flipper.on((MOUSE_EVENTS.START + '.' + EVENT_NAMESPACE), onstartListener)
                .on((MOUSE_EVENTS.MOVE  + '.' + EVENT_NAMESPACE), onmoveListener);
@@ -595,6 +617,8 @@
             easing   : 'swing'
         },
         change    : function(event, ui) {
+        },
+        flipstart : function(event, ui) {
         },
         flip      : function(event, ui) {
         }
