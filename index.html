@@ -407,6 +407,15 @@ $(function() {
         }
     });
 
+    $('#flipswitch-flipstart-1').flipswitch({
+        type      : 'flip',
+        flipstart : function(event, ui) {
+            console.dir(event);     // This is event object that jQuery wraps
+            console.log(ui.value);  // true or false (by default)
+            console.log(ui.state);  // 'left' or 'right'
+        }
+    });
+
     $('#flipswitch-flip-1').flipswitch({
         type : 'flip',
         flip : function(event, ui) {
@@ -440,9 +449,9 @@ $(function() {
                 <p>BETA version</p>
                 <hr />
                 <dl>
-                    <dt><span class="icon-listmarker"></span>minified (5.167 KB)</dt>
+                    <dt><span class="icon-listmarker"></span>minified (5.337 KB)</dt>
                     <dd><a href="build/jquery.jqflipswitch.min.js" download="jquery.jqflipswitch.min.js"><span class="icon-download"></span>Download</a></dd>
-                    <dt><span class="icon-listmarker"></span>development (20.478 KB)</dt>
+                    <dt><span class="icon-listmarker"></span>development (21.363 KB)</dt>
                     <dd><a href="build/jquery.jqflipswitch.js" download="jquery.jqflipswitch.js"><span class="icon-download"></span>Download</a></dd>
                 </dl>
             </article>
@@ -1103,6 +1112,7 @@ $(function() {
                     </thead>
                     <tbody>
                         <tr><td><a href="#section-events-change">change</a></td><td>Triggered after value is changed.</td></tr>
+                        <tr><td><a href="#section-events-flipstart">flipstart</a></td><td>Triggered before flip.</td></tr>
                         <tr><td><a href="#section-events-flip">flip</a></td><td>Triggered during flip.</td></tr>
                     </tbody>
                 </table>
@@ -1125,6 +1135,24 @@ $(function() {
                 </article>
             </section>
             <!-- //#section-events-change -->
+            <section id="section-events-flipstart">
+                <h2>flipstart(event, ui)</h2>
+                <article>
+<pre class="brush: js;">
+$(function() {
+    $(&quot;#flipswitch&quot;).flipswitch({
+        flipstart : function(event, ui) {
+            console.dir(event);     // This is event object that jQuery wraps.
+            console.log(ui.value);  // true or false (by default)
+            console.log(ui.state);  // &quot;left&quot; or &quot;right&quot;
+        }
+    });
+});
+</pre>
+                    <div id="flipswitch-flipstart-1"></div>
+                </article>
+            </section>
+            <!-- //#section-events-flipstart -->
             <section id="section-events-flip">
                 <h2>flip(event, ui)</h2>
                 <article>
