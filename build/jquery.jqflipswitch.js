@@ -327,6 +327,16 @@
     };
 
     /**
+     * This method is event listener that is invoked on the end of flip.
+     * @param {object} event This argument is the wrapped event object by jQuery.
+     * @param {object} settings This argument is object for plugin setting.
+     * @param {FLIPPER_STATES} state This argument is either 'left' or 'right'.
+     */
+    var _onflipendListener = function(event, settings, state) {
+        _invokeCallback(event, settings, state);
+    };
+
+    /**
      * This method adds event listener that is triggered after value changed.
      * @param {HTMLElement} element This argument is HTMLElement that wraps the parts for flip-switch.
      */
@@ -470,6 +480,8 @@
                     break;
             }
 
+            flipswitch.trigger('flipend', [settings, states.state]);
+
             if (states.changed) {
                 flipswitch.trigger('change', [settings, states.state]);
             }
@@ -480,6 +492,7 @@
 
         self.on(('flipstart.' + EVENT_NAMESPACE), _onflipstartListener);
         self.on(('flip.'      + EVENT_NAMESPACE), _onflipListener);
+        self.on(('flipend.'   + EVENT_NAMESPACE), _onflipendListener);
 
         flipper.on((MOUSE_EVENTS.START + '.' + EVENT_NAMESPACE), onstartListener)
                .on((MOUSE_EVENTS.MOVE  + '.' + EVENT_NAMESPACE), onmoveListener);
@@ -621,6 +634,8 @@
         flipstart : function(event, ui) {
         },
         flip      : function(event, ui) {
+        },
+        flipend   : function(event, ui) {
         }
     };
 
