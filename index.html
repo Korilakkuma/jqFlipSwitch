@@ -425,6 +425,15 @@ $(function() {
         }
     });
 
+   $('#flipswitch-flipend-1').flipswitch({
+        type    : 'flip',
+        flipend : function(event, ui) {
+            console.dir(event);     // This is event object that jQuery wraps
+            console.log(ui.value);  // true or false (by default)
+            console.log(ui.state);  // 'left' or 'right'
+        }
+    });
+
 });
 //-->
 </script>
@@ -449,9 +458,9 @@ $(function() {
                 <p>BETA version</p>
                 <hr />
                 <dl>
-                    <dt><span class="icon-listmarker"></span>minified (5.337 KB)</dt>
+                    <dt><span class="icon-listmarker"></span>minified (5.448 KB)</dt>
                     <dd><a href="build/jquery.jqflipswitch.min.js" download="jquery.jqflipswitch.min.js"><span class="icon-download"></span>Download</a></dd>
-                    <dt><span class="icon-listmarker"></span>development (21.363 KB)</dt>
+                    <dt><span class="icon-listmarker"></span>development (22.005 KB)</dt>
                     <dd><a href="build/jquery.jqflipswitch.js" download="jquery.jqflipswitch.js"><span class="icon-download"></span>Download</a></dd>
                 </dl>
             </article>
@@ -1114,6 +1123,7 @@ $(function() {
                         <tr><td><a href="#section-events-change">change</a></td><td>Triggered after value is changed.</td></tr>
                         <tr><td><a href="#section-events-flipstart">flipstart</a></td><td>Triggered before flip.</td></tr>
                         <tr><td><a href="#section-events-flip">flip</a></td><td>Triggered during flip.</td></tr>
+                        <tr><td><a href="#section-events-flipend">flipend</a></td><td>Triggered after flip.</td></tr>
                     </tbody>
                 </table>
             </article>
@@ -1141,6 +1151,7 @@ $(function() {
 <pre class="brush: js;">
 $(function() {
     $(&quot;#flipswitch&quot;).flipswitch({
+        type      : &quot;flip&quot;,
         flipstart : function(event, ui) {
             console.dir(event);     // This is event object that jQuery wraps.
             console.log(ui.value);  // true or false (by default)
@@ -1159,6 +1170,7 @@ $(function() {
 <pre class="brush: js;">
 $(function() {
     $(&quot;#flipswitch&quot;).flipswitch({
+        type : &quot;flip&quot;,
         flip : function(event, ui) {
             console.dir(event);     // This is event object that jQuery wraps.
             console.log(ui.value);  // undefined
@@ -1171,6 +1183,25 @@ $(function() {
                 </article>
             </section>
             <!-- //#section-events-flip -->
+            <section id="section-events-flipend">
+                <h2>flipend(event, ui)</h2>
+                <article>
+<pre class="brush: js;">
+$(function() {
+    $(&quot;#flipswitch&quot;).flipswitch({
+        type    : &quot;flip&quot;,
+        flipend : function(event, ui) {
+            console.dir(event);     // This is event object that jQuery wraps.
+            console.log(ui.value);  // true or false (by default)
+            console.log(ui.state);  // &quot;left&quot; or &quot;right&quot;
+        }
+    });
+});
+</pre>
+                    <div id="flipswitch-flipend-1"></div>
+                </article>
+            </section>
+            <!-- //#section-events-flipend -->
         </section>
         <!-- //#section-events -->
         <footer>
