@@ -527,8 +527,9 @@
                     var settings   = $(element).flipswitch.settings;
                     var flipswitch = _create(element, settings);
 
-                    // Remove Event Listener
+                    // Remove Event Listeners
                     $(flipswitch).off('.' + EVENT_NAMESPACE);
+                    $(window).off('.' + EVENT_NAMESPACE);
 
                     // Add Event Listener
                     _addEventOnChange(flipswitch, settings);
