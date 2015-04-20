@@ -16,6 +16,10 @@
     -webkit-border-radius:24px;
        -moz-border-radius:24px;
             border-radius:24px;
+
+    -webkit-user-select:none;
+       -moz-user-select:none;
+            user-select:none;
 }
 
 .jq-flipswitch.jq-flipper-left  {background-color:#006600;}
