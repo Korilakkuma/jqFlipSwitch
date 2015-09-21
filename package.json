@@ -1,0 +1,41 @@
+{
+  "name": "jq-flip-switch",
+  "version": "1.0.0",
+  "description": "jQuery Plugin for Flip-Switch",
+  "main": "build/jquery.jqflipswitch.min.js",
+  "scripts": {
+    "jshint": "grunt jshint",
+    "test": "grunt test",
+    "build": "grunt build",
+    "observe": "grunt observe",
+    "default": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Korilakkuma/jqFlipSwitch.git"
+  },
+  "keywords": [
+    "jq-flip-switch",
+    "jquery-plugin",
+    "flip switch",
+    "ui"
+  ],
+  "author": "Korilakkuma <rilakkuma.san.xjapan@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Korilakkuma/jqFlipSwitch/issues"
+  },
+  "homepage": "https://korilakkuma.github.io/jqFlipSwitch/",
+  "dependencies": {
+    "jquery": ">=1.7.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-qunit": "^0.7.0",
+    "grunt-contrib-uglify": "^0.9.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "qunit": "^0.7.6"
+  }
+}

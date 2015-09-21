@@ -1,0 +1,22 @@
+{
+  "name": "jq-flip-switch",
+  "version": "1.0.0",
+  "homepage": "https://korilakkuma.github.io/jqFlipSwitch/",
+  "authors": [
+    "Korilakkuma <rilakkuma.san.xjapan@gmail.com>"
+  ],
+  "description": "jQuery Plugin for Flip-Switch",
+  "main": "build/jquery.jqflipswitch.min.js",
+  "keywords": [
+    "jq-flip-switch",
+    "jquery-plugin",
+    "flip switch",
+    "ui"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=1.7.0"
+  },
+  "ignore" : [
+  ]
+}
