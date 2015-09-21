@@ -1,14 +1,15 @@
-/** 
+/**
  * jquery.jqflipswitch.js
  * @fileoverview jQuery Plugin for Flip-Switch
  *
- * Copyright 2014@Tomohiro IKEDA
+ * Copyright (c) 2014 Tomohiro IKEDA (Korilakkuma)
  * Released under the MIT license
  */
  
  
  
 (function($) {
+    'use strict';
 
     // This object wraps events
     var MOUSE_EVENTS = {};
@@ -173,7 +174,7 @@
     var _changeClass = function(flipswitch, state) {
         if (!(flipswitch instanceof jQuery)) {
             return;
-        };
+        }
 
         switch (state) {
             case FLIPPER_STATES.LEFT :
@@ -212,10 +213,7 @@
      * @param {FLIPPER_STATES} state This argument is either 'left' or 'right'.
      */
     var _invokeCallback = function(event, settings, state) {
-        if (!$.isPlainObject(event)
-            || !('type' in event)
-            || !$.isPlainObject(settings)
-            || !$.isFunction(settings[event.type])) {
+        if (!$.isPlainObject(event) || !('type' in event) || !$.isPlainObject(settings) || !$.isFunction(settings[event.type])) {
             return;
         }
 
@@ -573,9 +571,7 @@
              */
             destroy : function() {
                 // Remove classes and elements
-                var removedClasses = UI_CLASSES.FLIP_SWITCH  + ' '
-                                   + UI_CLASSES.FLIPPER_LEFT + ' '
-                                   + UI_CLASSES.FLIPPER_RIGHT;
+                var removedClasses = UI_CLASSES.FLIP_SWITCH  + ' ' + UI_CLASSES.FLIPPER_LEFT + ' ' + UI_CLASSES.FLIPPER_RIGHT;
 
                 // Clear
                 self.flipswitch.settings = {};
@@ -601,7 +597,7 @@
         if (methods[String(method)]) {
             return methods[String(method)].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if ($.isPlainObject(method) || (method === undefined)) {
-            return methods['create'](method);
+            return methods.create(method);
         } else {
             $.error('jquery.jqflipswitch.js : The designated method ("' + method + '") is not defined.');
         }
