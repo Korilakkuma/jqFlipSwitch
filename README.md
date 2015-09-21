@@ -3,6 +3,6 @@ jqFlipSwitch
   
 *jqFlipSwitch* is jQuery Plugin for Flip-Switch.
   
-[Download & Usage](http://korilakkuma.github.io/jqFlipSwitch/)
+* [Download & Usage](https://korilakkuma.github.io/jqFlipSwitch/)
 
-Copyright 2014 © Tomohiro IKEDA
+Copyright (c) 2014 Tomohiro IKEDA (Korilakkuma)
