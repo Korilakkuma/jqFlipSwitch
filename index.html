@@ -8,8 +8,9 @@
 <meta name="keywords" content="jQuery Plugin, Flip-Switch, jQueryプラグイン, フリップスイッチ" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=yes" />
 <meta name="format-detection" content="telephone=no" />
+<link rel="canonical" href="https://korilakkuma.github.io/jqFlipSwitch/" />
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro" type="text/css" media="all" />
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro" type="text/css" media="all" />
 <style type="text/css">
 
     * {
@@ -54,9 +55,10 @@
         min-width:320px;
     }
 
-    #page {
+    .inner-block,
+    #maincontents > section {
         margin:0rem auto;
-        max-width:1600px;
+        max-width:1320px;
     }
 
     header {
@@ -68,6 +70,10 @@
         background-color:#006600;
     }
 
+    #fork-me-on-github {
+        display:none;
+    }
+
     h1, h2, #section-download p {
         font-family:'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
         font-weight:lighter;
@@ -76,12 +82,14 @@
     header h1 {
         font-size:4rem;
         color:#FFF;
+        text-align:center;
     }
 
     header h2 {
         margin:1rem 0rem 0rem 1rem;
         font-size:1.5rem;
         color:#EEE;
+        text-align:center;
     }
 
     section {
@@ -197,10 +205,11 @@
         font-size:1rem;
     }
 
-    pre {
+    #section-installation pre {
+        padding-left:1rem;
         font-family:"Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
         font-size:1rem;
-        background-color:#fefefe;
+        background-color:#fafafa;
     }
 
     .syntaxhighlighter {
@@ -284,6 +293,18 @@
             font-size:14px;
         }
 
+        #fork-me-on-github {
+            display:block;
+        }
+
+        header h1 {
+            text-align:left;
+        }
+
+        header h2 {
+            text-align:left;
+        }
+
         dl {
             width:260px;
         }
@@ -292,6 +313,18 @@
     @media only screen and (min-width: 1024px) {
         html, body {
             font-size:16px;
+        }
+
+        #fork-me-on-github {
+            display:block;
+        }
+
+        header h1 {
+            text-align:left;
+        }
+
+        header h2 {
+            text-align:left;
         }
 
         dl {
@@ -305,6 +338,15 @@
 <link rel="stylesheet" href="lib/syntaxhighlighter/styles/shThemeDefault.css" type="text/css" media="all" />
 <link rel="stylesheet" href="lib/syntaxhighlighter/styles/shCoreEclipse.css" type="text/css" media="all" />
 <link rel="stylesheet" href="lib/syntaxhighlighter/styles/shThemeEclipse.css" type="text/css" media="all" />
+<script type="text/javascript">
+<!--
+    (function() {
+        if ((location.hostname === 'korilakkuma.github.io') && (location.protocol !== 'https:')) {
+            location.protocol = 'https:';
+        }
+    })();
+//-->
+</script>
 <script type="text/javascript" src="lib/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="build/jquery.jqflipswitch.min.js"></script>
 <script type="text/javascript">
@@ -443,30 +485,45 @@ $(function() {
 });
 //-->
 </script>
+<!-- Google Analytics -->
+<script type="text/javascript">
+<!--
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-41390233-1', 'weblike.jp');
+    ga('send', 'pageview');
+//-->
+</script>
+<!-- /Google Analytics -->
 </head>
 
 
 <body>
-    <div id="page">
-        <header>
+    <header>
+        <div class="inner-block">
             <h1>jqFilpSwitch</h1>
             <h2>jQuery Plugin for Flip-Switch</h2>
-            <div>
-                <a href="https://github.com/Korilakkuma/jqFlipSwitch" target="_blank">
-                    <img style="position: absolute; top: 0; right: 0; z-index: 2; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png">
+            <div id="fork-me-on-github">
+                <a href="//github.com/Korilakkuma/jqFlipSwitch" target="_blank">
+                    <img style="position: absolute; top: 0; right: 0; z-index: 2; border: 0;" src="//camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="//s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png">
                 </a>
             </div>
-        </header>
+        </div>
+    </header>
 
+    <div id="maincontents">
         <section id="section-download">
             <h1>Download</h1>
             <article>
                 <p>BETA version</p>
                 <hr />
                 <dl>
-                    <dt><span class="icon-listmarker"></span>minified (5.484 KB)</dt>
+                    <dt><span class="icon-listmarker"></span>minified (5.944 KB)</dt>
                     <dd><a href="build/jquery.jqflipswitch.min.js" download="jquery.jqflipswitch.min.js"><span class="icon-download"></span>Download</a></dd>
-                    <dt><span class="icon-listmarker"></span>development (22.064 KB)</dt>
+                    <dt><span class="icon-listmarker"></span>development (21.989 KB)</dt>
                     <dd><a href="build/jquery.jqflipswitch.js" download="jquery.jqflipswitch.js"><span class="icon-download"></span>Download</a></dd>
                     <dt><span class="icon-listmarker"></span>CSS (1.165 KB)</dt>
                     <dd><a href="build/css/jqflipswitch.default.style.css" download="jqflipswitch.default.style.css"><span class="icon-download"></span>Download</a></dd>
@@ -479,13 +536,13 @@ $(function() {
             <article>
 <pre>
 <code>
-$ npm install --save-dev jq-flip-switch
+$ npm install jq-flip-switch
 </code>
 </pre>
                 <p>or,</p>
 <pre>
 <code>
-$ bower install --save-dev jq-flip-switch
+$ bower install jq-flip-switch
 </code>
 </pre>
             </article>
@@ -496,7 +553,7 @@ $ bower install --save-dev jq-flip-switch
             <article>
                 <p>This plugin requires jQuery (<b>greater than or equal to version 1.7</b>).</p>
 <pre class="brush: html;">
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://code.jquery.com/jquery-2.1.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;//code.jquery.com/jquery-2.1.1.min.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.jqflipswitch.js&quot;&gt;&lt;/script&gt;
 </pre>
                 <p>
@@ -1229,11 +1286,20 @@ $(function() {
             <!-- //#section-events-flipend -->
         </section>
         <!-- //#section-events -->
-        <footer>
-            <p>Copyright 2014&copy;Tomohiro IKEDA</p>
-        </footer>
+        <section id="section-license">
+            <h1>License</h1>
+            <article>
+                <p>Copyright &copy; 2014 Tomohiro IKEDA (Korilakkuma)<br />Released under the MIT license</p>
+            </article>
+        </section>
+        <!-- //#section-license -->
     </div>
-    <!-- //#page -->
+    <!-- //#maincontents -->
+    <footer>
+        <div class="inner-block">
+            <p>Copyright &copy; 2014 Tomohiro IKEDA (Korilakkuma)</p>
+        </div>
+    </footer>
     <script type="text/javascript" src="lib/syntaxhighlighter/scripts/shCore.js"></script>
     <script type="text/javascript" src="lib/syntaxhighlighter/scripts/shBrushJScript.js"></script>
     <script type="text/javascript" src="lib/syntaxhighlighter/scripts/shBrushXml.js"></script>
