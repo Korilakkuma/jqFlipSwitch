@@ -1,6 +1,8 @@
 jqFlipSwitch
 =========
   
+[![Build Status](https://travis-ci.org/Korilakkuma/jqFlipSwitch.svg?branch=master)](https://travis-ci.org/Korilakkuma/jqFlipSwitch)
+  
 jQuery Plugin for Flip-Switch
   
 ## Installation
